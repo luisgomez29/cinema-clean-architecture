@@ -16,9 +16,11 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
     dependencies {
         implementation 'io.projectreactor:reactor-core'
         implementation 'io.projectreactor.addons:reactor-extra'
+        implementation platform("software.amazon.awssdk:bom:${awssdkVersion}")
 
         testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.8.RELEASE'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

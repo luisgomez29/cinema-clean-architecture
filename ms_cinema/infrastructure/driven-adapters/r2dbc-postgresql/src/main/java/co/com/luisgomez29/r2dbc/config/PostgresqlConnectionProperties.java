@@ -1,14 +1,17 @@
 package co.com.luisgomez29.r2dbc.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-@ConfigurationProperties(prefix = "adapters.postgres")
-public record PostgresqlConnectionProperties(
-        String database,
-        String schema,
-        String username,
-        String password,
-        String host,
-        Integer port) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PostgresqlConnectionProperties {
+    private String dbname;
+    private String schema;
+    private String username;
+    private String password;
+    private String host;
+    private Integer port;
 }
