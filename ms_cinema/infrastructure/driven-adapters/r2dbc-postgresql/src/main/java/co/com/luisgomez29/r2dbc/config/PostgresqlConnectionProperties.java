@@ -1,12 +1,8 @@
 package co.com.luisgomez29.r2dbc.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class PostgresqlConnectionProperties {
     private String dbname;
     private String schema;
