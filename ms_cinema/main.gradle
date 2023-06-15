@@ -58,7 +58,7 @@ subprojects {
 
 jacoco {
     toolVersion = "${jacocoVersion}"
-    reportsDirectory = file("$buildDir/reports")
+    reportsDirectory.set(file("$buildDir/reports"))
 }
 
 tasks.register('jacocoMergedReport', JacocoReport) {
