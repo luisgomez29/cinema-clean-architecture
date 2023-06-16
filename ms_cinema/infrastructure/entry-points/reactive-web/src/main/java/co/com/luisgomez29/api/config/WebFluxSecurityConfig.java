@@ -1,5 +1,6 @@
 package co.com.luisgomez29.api.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -11,6 +12,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class WebFluxSecurityConfig {
@@ -32,17 +34,14 @@ public class WebFluxSecurityConfig {
     }
 
     @Bean
-    CorsWebFilter corsWebFilter() {
-        CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://allowed-origin.com"));
-        corsConfig.setMaxAge(8000L);
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedHeader("Baeldung-Allowed");
-
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfig);
-
+    CorsWebFilter corsWebFilter(@Value("${cors.allowed-origins}") String[] origins) {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(List.of(origins));
+        config.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT"));
+        config.setAllowedHeaders(List.of(CorsConfiguration.ALL));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
         return new CorsWebFilter(source);
     }
 
