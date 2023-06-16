@@ -21,9 +21,13 @@ adapters:
     password: "admin"
     schema: "schcined"
 
+helpers:
   secrets-manager:
-    postgres: cinema-local-secretrds-CNX
     endpoint: http://localhost:4566
+    cacheSize: 5
+    cacheTime: 3600
+    postgres: cinema-local-secretrds-CNX
+
 
 management:
   endpoints:

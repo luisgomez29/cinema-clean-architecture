@@ -3,6 +3,6 @@ package co.com.luisgomez29.secretsmanager;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
-@ConfigurationProperties(prefix = "adapters.secrets-manager")
+@ConfigurationProperties(prefix = "helpers.secrets-manager")
 public record SecretsNameStandard(String postgres) {
 }

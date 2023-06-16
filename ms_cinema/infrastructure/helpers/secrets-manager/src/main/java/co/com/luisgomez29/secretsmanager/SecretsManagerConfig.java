@@ -1,28 +1,32 @@
 package co.com.luisgomez29.secretsmanager;
 
-import co.com.bancolombia.secretsmanager.connector.AWSSecretManagerConnector;
+import co.com.bancolombia.secretsmanager.config.AWSSecretsManagerConfig;
+import co.com.bancolombia.secretsmanager.connector.AWSSecretManagerConnectorAsync;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import software.amazon.awssdk.regions.Region;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecretsManagerConfig {
 
     private final SecretsManagerProperties properties;
-    private static final String REGION_SECRET = Region.US_EAST_1.toString();
 
     @Bean
     @Profile({"dev", "qa", "pdn"})
-    public AWSSecretManagerConnector connectionAws() {
-        return new AWSSecretManagerConnector(REGION_SECRET);
+    public AWSSecretManagerConnectorAsync connectionAws() {
+        return new AWSSecretManagerConnectorAsync(AWSSecretsManagerConfig.builder()
+                .cacheSize(properties.cacheSize())
+                .cacheSeconds(properties.cacheTime())
+                .build());
     }
 
     @Bean
     @Profile("local")
-    public AWSSecretManagerConnector connectionLocal() {
-        return new AWSSecretManagerConnector(REGION_SECRET, properties.endpoint());
+    public AWSSecretManagerConnectorAsync connectionLocal() {
+        return new AWSSecretManagerConnectorAsync(AWSSecretsManagerConfig.builder()
+                .endpoint(properties.endpoint())
+                .build());
     }
 }

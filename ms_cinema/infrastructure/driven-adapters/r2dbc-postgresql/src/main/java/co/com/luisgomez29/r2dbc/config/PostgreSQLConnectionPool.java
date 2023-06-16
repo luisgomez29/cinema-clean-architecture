@@ -24,7 +24,7 @@ public class PostgreSQLConnectionPool {
     private final SecretsNameStandard secretsNameStandard;
 
     private PostgresqlConnectionProperties postgresProperties() {
-        return secretsManager.getSecret(secretsNameStandard.postgres(), PostgresqlConnectionProperties.class);
+        return secretsManager.getSecret(secretsNameStandard.postgres(), PostgresqlConnectionProperties.class).block();
     }
 
     @Bean
