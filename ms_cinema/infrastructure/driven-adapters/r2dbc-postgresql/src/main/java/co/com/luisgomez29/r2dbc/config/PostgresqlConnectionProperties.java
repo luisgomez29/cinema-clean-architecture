@@ -1,13 +1,12 @@
 package co.com.luisgomez29.r2dbc.config;
 
-import lombok.Data;
+public record PostgresqlConnectionProperties(
+        String host,
+        Integer port,
+        String dbname,
+        String schema,
+        String username,
+        String password
+) {
 
-@Data
-public class PostgresqlConnectionProperties {
-    private String dbname;
-    private String schema;
-    private String username;
-    private String password;
-    private String host;
-    private Integer port;
 }
