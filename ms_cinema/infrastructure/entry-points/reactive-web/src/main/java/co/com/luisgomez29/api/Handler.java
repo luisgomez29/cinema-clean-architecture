@@ -17,12 +17,4 @@ public class Handler {
                 .collectList()
                 .flatMap(genres -> ServerResponse.ok().bodyValue(genres));
     }
-
-    public Mono<ServerResponse> listenGETOtherUseCase(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
-    }
-
-    public Mono<ServerResponse> listenPOSTUseCase(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
-    }
 }
