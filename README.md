@@ -1,4 +1,9 @@
-0# Proyecto Base Implementando Clean Architecture
+# Proyecto Base Implementando Clean Architecture
+
+API REST con Spring WebFlux, PostgreSQL y AWS para CRUD de modelo de Cine aplicando las prácticas de arquitectura limpia.
+
+# Modelo Entidad Relación
+![cinema_er_diagram.png](https://raw.githubusercontent.com/luisgomez29/cinema-clean-architecture/main/ms_cinema/deployment/db/cinema_er_diagram.png)
 
 ## Antes de Iniciar
 
@@ -51,6 +56,6 @@ Los entry points representan los puntos de entrada de la aplicación o el inicio
 Este módulo es el más externo de la arquitectura, es el encargado de ensamblar los distintos módulos, resolver las
 dependencias y crear los beans de los casos de use (UseCases) de forma automática, inyectando en éstos instancias
 concretas de las dependencias declaradas. Además inicia la aplicación (es el único módulo del proyecto donde
-encontraremos la función “public static void main(String[] args)”.
+encontraremos la función `public static void main(String[] args)`.
 
 **Los beans de los casos de uso se disponibilizan automáticamente gracias a un '@ComponentScan' ubicado en esta capa.**
