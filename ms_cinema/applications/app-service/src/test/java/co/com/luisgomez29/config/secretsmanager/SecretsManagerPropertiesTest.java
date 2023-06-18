@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 class SecretsManagerPropertiesTest {
 
     @Test
-    void getSuccessProperties() {
+    void getPropertiesSuccess() {
         var properties = new SecretsManagerProperties(
                 "http://localhost:4566",
                 5,
@@ -18,7 +18,7 @@ class SecretsManagerPropertiesTest {
         );
 
         assertAll(
-                "getSuccessProperties",
+                "getPropertiesSuccess",
                 () -> assertInstanceOf(SecretsManagerProperties.class, properties),
                 () -> assertEquals("http://localhost:4566", properties.endpoint()),
                 () -> assertEquals(5, properties.cacheSize()),
