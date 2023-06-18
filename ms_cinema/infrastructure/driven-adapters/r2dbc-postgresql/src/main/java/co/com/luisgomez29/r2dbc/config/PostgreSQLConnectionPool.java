@@ -13,10 +13,8 @@ import java.time.Duration;
 @Configuration
 @RequiredArgsConstructor
 public class PostgreSQLConnectionPool {
-    // TODO: change pool connection properties based on your resources.
-    public static final int INITIAL_SIZE = 12;
-    public static final int MAX_SIZE = 15;
-    public static final int MAX_IDLE_TIME = 30;
+
+    private final PostgreSQLConnectionPoolProperties connectionPoolProperties;
 
     @Bean
     public ConnectionPool getConnectionConfig(PostgresqlConnectionProperties properties) {
@@ -32,10 +30,9 @@ public class PostgreSQLConnectionPool {
         ConnectionPoolConfiguration poolConfiguration = ConnectionPoolConfiguration.builder()
                 .connectionFactory(new PostgresqlConnectionFactory(dbConfiguration))
                 .name("api-postgres-connection-pool")
-                .initialSize(INITIAL_SIZE)
-                .maxSize(MAX_SIZE)
-                .maxIdleTime(Duration.ofMinutes(MAX_IDLE_TIME))
-                .validationQuery("SELECT 1")
+                .initialSize(connectionPoolProperties.initialSize())
+                .maxSize(connectionPoolProperties.maxSize())
+                .maxIdleTime(Duration.ofMinutes(connectionPoolProperties.maxIdleTime()))
                 .build();
 
         return new ConnectionPool(poolConfiguration);

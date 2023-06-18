@@ -20,6 +20,10 @@ adapters:
     username: "postgres"
     password: "admin"
     schema: "schcined"
+    pool:
+      initialSize: 12
+      maxSize: 15
+      maxIdleTime: 10
 
 helpers:
   secrets-manager:
