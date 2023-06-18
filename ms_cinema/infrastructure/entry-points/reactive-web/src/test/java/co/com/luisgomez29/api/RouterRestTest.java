@@ -3,6 +3,7 @@ package co.com.luisgomez29.api;
 import co.com.luisgomez29.api.config.WebFluxSecurityConfig;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.usecase.cinema.CinemaUseCase;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,7 @@ class RouterRestTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(String.class)
-                .value(userResponse -> Assertions.assertThat(userResponse).isNotEmpty()
-                );
+                .expectBody(JsonNode.class)
+                .value(userResponse -> Assertions.assertThat(userResponse).isNotEmpty());
     }
 }

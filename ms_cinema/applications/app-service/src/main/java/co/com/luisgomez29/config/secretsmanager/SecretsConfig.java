@@ -43,7 +43,6 @@ public class SecretsConfig {
     @Bean
     public PostgresqlConnectionProperties getSecretPostgres(GenericManager connector) {
         return this.getSecret(properties.postgres(), PostgresqlConnectionProperties.class, connector);
-
     }
 
 }
