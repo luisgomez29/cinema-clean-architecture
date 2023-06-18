@@ -1,7 +1,7 @@
-package co.com.luisgomez29.model.commons.exception;
+package co.com.luisgomez29.model.common.exception;
 
 
-import co.com.luisgomez29.model.commons.enums.TechnicalExceptionMessage;
+import co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,8 +1,8 @@
 package co.com.luisgomez29.config.secretsmanager;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
@@ -17,7 +17,7 @@ class SecretsManagerPropertiesTest {
                 "secretPostgres"
         );
 
-        Assertions.assertAll(
+        assertAll(
                 "getSuccessProperties",
                 () -> assertInstanceOf(SecretsManagerProperties.class, properties),
                 () -> assertEquals("http://localhost:4566", properties.endpoint()),

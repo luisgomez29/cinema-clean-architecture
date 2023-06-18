@@ -21,15 +21,20 @@ adapters:
     password: "admin"
     schema: "schcined"
     pool:
-      initialSize: 12
-      maxSize: 15
-      maxIdleTime: 10
+      initial-size: 12
+      max-size: 15
+      max-idle-time: 10
+
+  reactive-web:
+    base-path: "/api/v1/cinema/"
+    genre: "genre"
+
 
 helpers:
   secrets-manager:
     endpoint: http://localhost:4566
-    cacheSize: 5
-    cacheTime: 3600
+    cache-size: 5
+    cache-time: 3600
     postgres: cinema-local-secretrds-CNX
 
 

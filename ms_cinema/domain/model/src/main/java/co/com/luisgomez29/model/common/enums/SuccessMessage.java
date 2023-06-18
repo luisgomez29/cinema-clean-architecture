@@ -1,4 +1,4 @@
-package co.com.luisgomez29.model.commons.enums;
+package co.com.luisgomez29.model.common.enums;
 
 
 import lombok.Getter;
