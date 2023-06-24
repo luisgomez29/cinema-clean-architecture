@@ -19,32 +19,6 @@ spring:
       reactor:
         netty: false
 
-adapters:
-  postgres:
-    database: "cinema"
-    host: "localhost"
-    port: 5432
-    username: "postgres"
-    password: "admin"
-    schema: "schcined"
-    pool:
-      initial-size: 12
-      max-size: 15
-      max-idle-time: 10
-
-  reactive-web:
-    base-path: "/api/v1/cinema/"
-    genre: "genre"
-
-
-helpers:
-  secrets-manager:
-    endpoint: http://localhost:4566
-    cache-size: 5
-    cache-time: 3600
-    postgres: cinema-local-secretrds-CNX
-
-
 management:
   health:
     probes:
@@ -64,6 +38,30 @@ management:
         health: health
         liveness: liveness
         readiness: readiness
+
+adapters:
+  postgres:
+    database: "cinema"
+    host: "localhost"
+    port: 5432
+    username: "postgres"
+    password: "admin"
+    schema: "schcined"
+    pool:
+      initial-size: 12
+      max-size: 15
+      max-idle-time: 10
+
+  reactive-web:
+    base-path: "/api/v1/cinema/"
+    genre: "/genre"
+
+helpers:
+  secrets-manager:
+    endpoint: http://localhost:4566
+    cache-size: 5
+    cache-time: 3600
+    postgres: cinema-local-secretrds-CNX
 
 cors:
   allowed-origins: "http://localhost:4200, http://localhost:8080"
