@@ -11,6 +11,13 @@ spring:
       path: "/h2"
   profiles:
     include: local
+  webflux:
+    base-path: /api/v1/cinema
+  logging:
+    level:
+      root: INFO
+      reactor:
+        netty: false
 
 adapters:
   postgres:
@@ -39,16 +46,24 @@ helpers:
 
 
 management:
+  health:
+    probes:
+      enabled: true
+  endpoint:
+    health:
+      show-details: never
+      enabled: true
+      cache:
+        time-to-live: 10s
   endpoints:
     web:
       exposure:
-        include: "health"
-
-  endpoint:
-    health:
-      probes:
-        enabled: true
-
+        include: health, liveness, readiness
+      base-path: /
+      path-mapping:
+        health: health
+        liveness: liveness
+        readiness: readiness
 
 cors:
   allowed-origins: "http://localhost:4200, http://localhost:8080"
