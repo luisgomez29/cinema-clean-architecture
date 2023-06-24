@@ -4,11 +4,6 @@
 -- GitHub: https://github.com/luisgomez29
 -- LinkedIn: http://www.linkedin.com/in/luis-guillermo-gomez-galeano
 --
-DROP TABLE IF EXISTS schcined.actor CASCADE;
-
-DROP TABLE IF EXISTS schcined."character" CASCADE;
-
-DROP TABLE IF EXISTS schcined.country CASCADE;
 
 DROP TABLE IF EXISTS schcined.genre CASCADE;
 
