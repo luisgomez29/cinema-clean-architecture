@@ -1,8 +1,10 @@
 package co.com.luisgomez29.r2dbc.genre;
 
+import co.com.luisgomez29.model.common.enums.Response;
 import co.com.luisgomez29.model.common.exception.TechnicalException;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.model.genre.gateways.GenreRepository;
+import co.com.luisgomez29.model.response.StatusResponse;
 import co.com.luisgomez29.r2dbc.genre.data.GenreData;
 import co.com.luisgomez29.r2dbc.genre.data.GenreMapper;
 import co.com.luisgomez29.r2dbc.helper.ReactiveAdapterOperations;
@@ -12,6 +14,8 @@ import reactor.core.publisher.Mono;
 
 import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_FIND_ALL;
 import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_FIND_BY_ID;
+import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_SAVE;
+import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_UPDATE;
 
 @Repository
 public class GenreRepositoryAdapter extends ReactiveAdapterOperations<Genre, GenreData, Integer, IGenreRepository>
@@ -31,5 +35,28 @@ public class GenreRepositoryAdapter extends ReactiveAdapterOperations<Genre, Gen
     public Mono<Genre> findGenderById(Integer id) {
         return super.findById(id)
                 .onErrorMap(e -> new TechnicalException(e, GENRE_FIND_BY_ID));
+    }
+
+    @Override
+    public Mono<Genre> saveGenre(Genre genre) {
+        return super.save(genre)
+                .onErrorMap(e -> new TechnicalException(e, GENRE_SAVE));
+    }
+
+    @Override
+    public Mono<StatusResponse<Genre>> updateGenre(Genre genreFound, Genre genre) {
+        return Mono.just(genre)
+                .map(g -> g.toBuilder()
+                        .id(genreFound.getId())
+                        .build()
+                )
+                .flatMap(super::save)
+                .map(genreUpdated -> StatusResponse.<Genre>builder()
+                        .before(genreFound)
+                        .actual(genreUpdated)
+                        .description(Response.SUCCESSFUL_UPGRADE.getDescription())
+                        .build()
+                )
+                .onErrorMap(e -> new TechnicalException(e, GENRE_UPDATE));
     }
 }

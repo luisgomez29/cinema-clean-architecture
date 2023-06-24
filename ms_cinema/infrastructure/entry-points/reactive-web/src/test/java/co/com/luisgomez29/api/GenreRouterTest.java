@@ -3,6 +3,8 @@ package co.com.luisgomez29.api;
 import co.com.luisgomez29.api.config.ApiProperties;
 import co.com.luisgomez29.api.config.WebFluxSecurityConfig;
 import co.com.luisgomez29.api.handlers.ExceptionHandler;
+import co.com.luisgomez29.api.services.genre.GenreHandler;
+import co.com.luisgomez29.api.services.genre.GenreRouter;
 import co.com.luisgomez29.model.common.exception.BusinessException;
 import co.com.luisgomez29.model.common.exception.TechnicalException;
 import co.com.luisgomez29.model.genre.Genre;
@@ -31,13 +33,13 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {
         WebFluxSecurityConfig.class,
         ExceptionHandler.class,
-        RouterRest.class,
-        Handler.class,
+        GenreRouter.class,
+        GenreHandler.class,
 })
 @EnableConfigurationProperties(ApiProperties.class)
 @WebFluxTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class RouterRestTest {
+class GenreRouterTest {
 
     @Autowired
     private WebTestClient webTestClient;

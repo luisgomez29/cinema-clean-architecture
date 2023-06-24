@@ -23,6 +23,7 @@ public class WebFluxSecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .headers(headers -> headers
                         .hsts(hsts -> hsts.maxAge(Duration.ofDays(730)).includeSubdomains(true).preload(true))
                         .contentSecurityPolicy(policy -> policy.policyDirectives(CSP))
