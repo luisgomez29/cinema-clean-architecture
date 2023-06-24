@@ -106,7 +106,7 @@ class GenreRepositoryAdapterTest {
     @Test
     void mustUpdateGenre() {
         var newGenre = Genre.builder()
-                .id(1)
+                .id(genre.getId())
                 .name("Terror")
                 .build();
 
