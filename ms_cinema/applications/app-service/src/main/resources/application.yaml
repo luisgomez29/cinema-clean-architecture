@@ -54,7 +54,7 @@ adapters:
 
   reactive-web:
     base-path: "/api/v1/cinema/"
-    genre: "/genre"
+    genre: "/genres"
 
 helpers:
   secrets-manager:
