@@ -1,19 +1,32 @@
 # Proyecto Base Implementando Clean Architecture
 
-API REST con Spring WebFlux, PostgreSQL y AWS para CRUD de modelo de Cine aplicando las prácticas de arquitectura limpia.
+API REST con Spring WebFlux, PostgreSQL y AWS para CRUD de modelo de Cine aplicando las prácticas de arquitectura
+limpia.
 
 # Modelo Entidad Relación
+
 ![cinema_er_diagram.png](https://raw.githubusercontent.com/luisgomez29/cinema-clean-architecture/main/ms_cinema/deployment/db/cinema_er_diagram.png)
 
-## Antes de Iniciar
+# Endpoints
+
+La API REST proporciona los siguientes endpoints:
+
+### Géneros de película
+
+| Name                      | Route       | Protected | Method |
+|---------------------------|-------------|-----------|--------|
+| Obtener todos los géneros | /genres     | NO        | GET    |
+| Obtener género por Id     | /genres/:id | NO        | GET    |
+| Guardar género            | /genres     | NO        | POST   |
+| Actualizar género         | /genres/:id | NO        | PUT    |
+
+# Arquitectura
 
 Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando
 con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
 
 Lee el
 artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
-
-# Arquitectura
 
 ![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
 
@@ -59,3 +72,10 @@ concretas de las dependencias declaradas. Además inicia la aplicación (es el �
 encontraremos la función `public static void main(String[] args)`.
 
 **Los beans de los casos de uso se disponibilizan automáticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+
+## Autor
+
+**Luis Guillermo Gómez Galeano**
+
+- [Github](https://github.com/luisgomez29)
+- [LinkedIn](http://www.linkedin.com/in/luis-guillermo-gomez-galeano)
