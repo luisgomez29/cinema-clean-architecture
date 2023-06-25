@@ -3,6 +3,7 @@ package co.com.luisgomez29.api.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.header.ReferrerPolicyServerHttpHeadersWriter.ReferrerPolicy;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@EnableWebFluxSecurity
 public class WebFluxSecurityConfig {
 
     public static final String CSP = "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; " +

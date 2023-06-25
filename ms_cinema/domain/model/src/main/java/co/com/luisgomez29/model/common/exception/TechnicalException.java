@@ -3,13 +3,16 @@ package co.com.luisgomez29.model.common.exception;
 
 import co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public class TechnicalException extends RuntimeException {
 
     private final TechnicalExceptionMessage technicalExceptionMessage;
+
+    public TechnicalException(TechnicalExceptionMessage technicalExceptionEnum) {
+        super(technicalExceptionEnum.getMessage());
+        this.technicalExceptionMessage = technicalExceptionEnum;
+    }
 
     public TechnicalException(String message, TechnicalExceptionMessage technicalException) {
         super(message);
