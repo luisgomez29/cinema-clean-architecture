@@ -19,7 +19,7 @@ import java.util.List;
 @EnableWebFluxSecurity
 public class WebFluxSecurityConfig {
 
-    public static final String CSP = "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; " +
+    private static final String CSP = "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; " +
             "object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests";
 
     @Bean
