@@ -14,10 +14,10 @@ import reactor.core.publisher.Mono;
 @Builder(toBuilder = true)
 public class ResponseDTO<T> {
 
-    private MetaDTO.Meta meta;
+    private final MetaDTO.Meta meta;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private T data;
+    private final T data;
 
     @SuppressWarnings("rawtypes")
     public static <T> ResponseDTO success(T data, ServerRequest request) {
