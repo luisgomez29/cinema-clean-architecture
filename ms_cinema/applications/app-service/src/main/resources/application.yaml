@@ -20,15 +20,12 @@ spring:
         netty: false
 
 management:
-  health:
-    probes:
-      enabled: true
   endpoint:
     health:
-      show-details: never
       enabled: true
-      cache:
-        time-to-live: 10s
+      show-details: never
+      probes:
+        enabled: true
   endpoints:
     web:
       exposure:
