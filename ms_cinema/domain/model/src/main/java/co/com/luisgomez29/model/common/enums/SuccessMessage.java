@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum SuccessMessage {
 
-    GET_SECRET("Secret obtained successfully");
+    GET_SECRET("Secret obtained successfully"),
+    SUCCESSFUL_UPGRADE("Successful upgrade");
 
-    private final String message;
+    private final String value;
 }

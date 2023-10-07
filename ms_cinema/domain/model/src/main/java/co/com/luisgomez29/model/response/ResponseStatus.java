@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder(toBuilder = true)
-public class StatusResponse<T> {
+public class ResponseStatus<T> {
     private String description;
     private T before;
     private T actual;

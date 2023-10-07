@@ -1,10 +1,10 @@
 package co.com.luisgomez29.r2dbc.genre;
 
-import co.com.luisgomez29.model.common.enums.Response;
+import co.com.luisgomez29.model.common.enums.SuccessMessage;
 import co.com.luisgomez29.model.common.exception.TechnicalException;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.model.genre.gateways.GenreRepository;
-import co.com.luisgomez29.model.response.StatusResponse;
+import co.com.luisgomez29.model.response.ResponseStatus;
 import co.com.luisgomez29.r2dbc.genre.data.GenreData;
 import co.com.luisgomez29.r2dbc.genre.data.GenreMapper;
 import co.com.luisgomez29.r2dbc.helper.ReactiveAdapterOperations;
@@ -44,17 +44,17 @@ public class GenreRepositoryAdapter extends ReactiveAdapterOperations<Genre, Gen
     }
 
     @Override
-    public Mono<StatusResponse<Genre>> updateGenre(Genre genreFound, Genre genre) {
+    public Mono<ResponseStatus<Genre>> updateGenre(Genre genreFound, Genre genre) {
         return Mono.just(genre)
                 .map(g -> g.toBuilder()
                         .id(genreFound.getId())
                         .build()
                 )
                 .flatMap(super::save)
-                .map(genreUpdated -> StatusResponse.<Genre>builder()
+                .map(genreUpdated -> ResponseStatus.<Genre>builder()
                         .before(genreFound)
                         .actual(genreUpdated)
-                        .description(Response.SUCCESSFUL_UPGRADE.getDescription())
+                        .description(SuccessMessage.SUCCESSFUL_UPGRADE.getValue())
                         .build()
                 )
                 .onErrorMap(e -> new TechnicalException(e, GENRE_UPDATE));

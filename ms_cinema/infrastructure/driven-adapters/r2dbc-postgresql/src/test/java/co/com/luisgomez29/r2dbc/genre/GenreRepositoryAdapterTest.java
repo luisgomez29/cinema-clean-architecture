@@ -1,9 +1,9 @@
 package co.com.luisgomez29.r2dbc.genre;
 
-import co.com.luisgomez29.model.common.enums.Response;
+import co.com.luisgomez29.model.common.enums.SuccessMessage;
 import co.com.luisgomez29.model.common.exception.TechnicalException;
 import co.com.luisgomez29.model.genre.Genre;
-import co.com.luisgomez29.model.response.StatusResponse;
+import co.com.luisgomez29.model.response.ResponseStatus;
 import co.com.luisgomez29.r2dbc.genre.data.GenreData;
 import co.com.luisgomez29.r2dbc.genre.data.GenreMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -115,10 +115,10 @@ class GenreRepositoryAdapterTest {
                 .name(newGenre.getName())
                 .build();
 
-        var response = StatusResponse.<Genre>builder()
+        var response = ResponseStatus.<Genre>builder()
                 .before(genre)
                 .actual(newGenre)
-                .description(Response.SUCCESSFUL_UPGRADE.getDescription()).build();
+                .description(SuccessMessage.SUCCESSFUL_UPGRADE.getValue()).build();
 
         when(repository.save(any())).thenReturn(Mono.just(newGenreData));
         when(mapper.toEntity(any())).thenReturn(newGenre);

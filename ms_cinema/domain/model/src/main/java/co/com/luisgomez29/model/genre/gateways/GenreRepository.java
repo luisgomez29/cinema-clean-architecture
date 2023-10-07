@@ -1,7 +1,7 @@
 package co.com.luisgomez29.model.genre.gateways;
 
 import co.com.luisgomez29.model.genre.Genre;
-import co.com.luisgomez29.model.response.StatusResponse;
+import co.com.luisgomez29.model.response.ResponseStatus;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -12,6 +12,6 @@ public interface GenreRepository {
 
     Mono<Genre> saveGenre(Genre genre);
 
-    Mono<StatusResponse<Genre>> updateGenre(Genre genreFound, Genre genre);
+    Mono<ResponseStatus<Genre>> updateGenre(Genre genreFound, Genre genre);
 
 }

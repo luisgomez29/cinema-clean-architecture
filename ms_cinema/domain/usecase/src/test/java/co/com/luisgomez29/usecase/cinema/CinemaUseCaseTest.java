@@ -1,11 +1,11 @@
 package co.com.luisgomez29.usecase.cinema;
 
-import co.com.luisgomez29.model.common.enums.Response;
+import co.com.luisgomez29.model.common.enums.SuccessMessage;
 import co.com.luisgomez29.model.common.exception.BusinessException;
 import co.com.luisgomez29.model.common.exception.TechnicalException;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.model.genre.gateways.GenreRepository;
-import co.com.luisgomez29.model.response.StatusResponse;
+import co.com.luisgomez29.model.response.ResponseStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -96,10 +96,10 @@ class CinemaUseCaseTest {
                 .name("Terror")
                 .build();
 
-        var res = StatusResponse.<Genre>builder()
+        var res = ResponseStatus.<Genre>builder()
                 .before(genre)
                 .actual(newGenre)
-                .description(Response.SUCCESSFUL_UPGRADE.getDescription())
+                .description(SuccessMessage.SUCCESSFUL_UPGRADE.getValue())
                 .build();
 
         when(genreRepository.findGenderById(genre.getId())).thenReturn(Mono.just(genre));

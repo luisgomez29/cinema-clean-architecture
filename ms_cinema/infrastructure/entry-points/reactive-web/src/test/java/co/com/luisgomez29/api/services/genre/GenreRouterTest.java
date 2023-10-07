@@ -5,9 +5,9 @@ import co.com.luisgomez29.api.config.WebFluxSecurityConfig;
 import co.com.luisgomez29.api.handlers.ExceptionHandler;
 import co.com.luisgomez29.api.handlers.ValidatorHandler;
 import co.com.luisgomez29.api.mapper.GenreDTOMapper;
-import co.com.luisgomez29.model.common.enums.Response;
+import co.com.luisgomez29.model.common.enums.SuccessMessage;
 import co.com.luisgomez29.model.genre.Genre;
-import co.com.luisgomez29.model.response.StatusResponse;
+import co.com.luisgomez29.model.response.ResponseStatus;
 import co.com.luisgomez29.usecase.cinema.CinemaUseCase;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.BeforeAll;
@@ -96,10 +96,10 @@ class GenreRouterTest extends BaseIntegration {
                 .name("Terror")
                 .build();
 
-        var res = StatusResponse.<Genre>builder()
+        var res = ResponseStatus.<Genre>builder()
                 .before(genre)
                 .actual(newGenre)
-                .description(Response.SUCCESSFUL_UPGRADE.getDescription())
+                .description(SuccessMessage.SUCCESSFUL_UPGRADE.getValue())
                 .build();
 
         when(useCase.update(anyInt(), any())).thenReturn(Mono.just(res));

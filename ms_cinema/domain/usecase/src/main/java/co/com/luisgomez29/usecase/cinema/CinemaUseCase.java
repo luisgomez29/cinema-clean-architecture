@@ -3,7 +3,7 @@ package co.com.luisgomez29.usecase.cinema;
 import co.com.luisgomez29.model.common.exception.BusinessException;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.model.genre.gateways.GenreRepository;
-import co.com.luisgomez29.model.response.StatusResponse;
+import co.com.luisgomez29.model.response.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -28,7 +28,7 @@ public class CinemaUseCase {
         return genreRepository.saveGenre(genre);
     }
 
-    public Mono<StatusResponse<Genre>> update(Integer id, Genre genre) {
+    public Mono<ResponseStatus<Genre>> update(Integer id, Genre genre) {
         return this.getById(id)
                 .flatMap(genreFound -> genreRepository.updateGenre(genreFound, genre));
     }
