@@ -49,9 +49,9 @@ subprojects {
         dependsOn test
         reports {
             xml.setRequired true
-            xml.setOutputLocation file("${buildDir}/reports/jacoco.xml")
+            xml.setOutputLocation layout.buildDirectory.file("reports/jacoco.xml")
             csv.setRequired false
-            html.setOutputLocation file("${buildDir}/reports/jacocoHtml")
+            html.setOutputLocation layout.buildDirectory.dir("reports/jacocoHtml")
         }
     }
 
@@ -59,11 +59,11 @@ subprojects {
 
 jacoco {
     toolVersion = "${jacocoVersion}"
-    reportsDirectory.set(file("$buildDir/reports"))
+    reportsDirectory.set(layout.buildDirectory.dir("reports"))
 }
 
 tasks.register('jacocoMergedReport', JacocoReport) {
-    dependsOn = subprojects.jacocoTestReport
+    dependsOn = [test, subprojects.jacocoTestReport]
     additionalSourceDirs.setFrom files(subprojects.sourceSets.main.allSource.srcDirs)
     sourceDirectories.setFrom files(subprojects.sourceSets.main.allSource.srcDirs)
     classDirectories.setFrom files(subprojects.sourceSets.main.output)
@@ -82,5 +82,5 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.2.1'
+    gradleVersion = '8.4'
 }
