@@ -4,36 +4,37 @@ spring:
   application:
     name: "ms_cinema"
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
+    exclude: "org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration"
   devtools:
     add-properties: false
   profiles:
-    include: local
+    include: "local"
   webflux:
-    base-path: /api/v1/cinema
+    base-path: "/api/v1/cinema"
   logging:
     level:
-      root: INFO
+      root: "INFO"
       reactor:
         netty: false
-
 management:
   endpoint:
     health:
       enabled: true
-      show-details: never
+      show-details: "never"
       probes:
         enabled: true
   endpoints:
     web:
       exposure:
-        include: health, liveness, readiness
-      base-path: /
+        include: "health, liveness, readiness"
+      base-path: "/"
       path-mapping:
-        health: health
-        liveness: liveness
-        readiness: readiness
-
+        health: "health"
+        liveness: "liveness"
+        readiness: "readiness"
+  health:
+    circuitbreakers:
+      enabled: true
 adapters:
   postgres:
     database: "cinema"
@@ -46,17 +47,39 @@ adapters:
       initial-size: 12
       max-size: 15
       max-idle-time: 10
-
   reactive-web:
     base-path: "/api/v1/cinema/"
     genre: "/genres"
-
 helpers:
   secrets-manager:
-    endpoint: http://localhost:4566
+    endpoint: "http://localhost:4566"
     cache-size: 5
     cache-time: 3600
-    postgres: cinema-local-secretrds-CNX
-
+    postgres: "cinema-local-secretrds-CNX"
 cors:
   allowed-origins: "http://localhost:4200, http://localhost:8080"
+adapter:
+  restconsumer:
+    timeout: 5000
+    url: "http://localhost:8080"
+resilience4j:
+  circuitbreaker:
+    instances:
+      testGet:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slowCallRateThreshold: 50
+        slowCallDurationThreshold: "2s"
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10
+        waitDurationInOpenState: "10s"
+      testPost:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slowCallRateThreshold: 50
+        slowCallDurationThreshold: "2s"
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10
+        waitDurationInOpenState: "10s"

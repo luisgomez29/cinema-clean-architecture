@@ -1,6 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+    implementation project(':rest-consumer')
     testImplementation 'com.fasterxml.jackson.core:jackson-databind'
     testImplementation 'com.tngtech.archunit:archunit:1.1.0'
     implementation project(':reactive-web')
@@ -10,6 +11,7 @@ dependencies {
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.github.bancolombia:aws-secrets-manager-sync:4.1.0'
     implementation 'software.amazon.awssdk:secretsmanager'
 }
