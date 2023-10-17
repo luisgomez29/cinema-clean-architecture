@@ -3,7 +3,7 @@ server:
   port: 8080
 spring:
   application:
-    name: ms_cinema
+    name: "ms_cinema"
   devtools:
     add-properties: false
   h2:
@@ -12,3 +12,10 @@ spring:
       path: /h2
   profiles:
     include:
+
+helpers:
+  secrets-manager:
+    endpoint: http://localhost:4566
+    cache-size: 5
+    cache-time: 3600
+    postgres: cinema-local-secretrds-CNX

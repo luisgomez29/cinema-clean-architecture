@@ -1,9 +1,18 @@
 apply(plugin = "org.springframework.boot")
 
 dependencies {
+    implementation(project(":r2dbc-postgresql"))
     implementation(project(":model"))
     implementation(project(":usecase"))
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("com.github.bancolombia:aws-secrets-manager-sync:4.1.0")
+    implementation("software.amazon.awssdk:secretsmanager")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
 }
 
 tasks.getByName<Jar>("jar") {
