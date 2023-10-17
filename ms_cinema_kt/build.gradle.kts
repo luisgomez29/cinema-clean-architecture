@@ -8,7 +8,6 @@ plugins {
     id("jacoco") apply true
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
-    kotlin("kapt") version "1.8.22"
 }
 
 allprojects {
