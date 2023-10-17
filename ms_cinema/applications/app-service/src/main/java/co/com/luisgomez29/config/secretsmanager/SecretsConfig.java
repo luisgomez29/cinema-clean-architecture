@@ -35,7 +35,7 @@ public class SecretsConfig {
             log.info("Secret was obtained successfully");
             return connector.getSecret(secretName, cls);
         } catch (Exception e) {
-            log.error(String.format("Error getting secret: %s", e.getMessage()));
+            log.error("Error getting secret: {}", e.getMessage());
             return null;
         }
     }
