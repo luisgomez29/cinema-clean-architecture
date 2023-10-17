@@ -8,6 +8,7 @@ plugins {
     id("jacoco") apply true
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
+    kotlin("kapt") version "1.8.22"
 }
 
 allprojects {
@@ -57,6 +58,7 @@ subprojects {
     apply(plugin = "jacoco")
     apply(plugin = "io.spring.dependency-management")
     dependencies {
+        implementation(platform("software.amazon.awssdk:bom:2.20.94"))
         implementation("io.projectreactor:reactor-core")
         implementation("io.projectreactor.addons:reactor-extra")
         testImplementation("io.projectreactor:reactor-test")
@@ -65,11 +67,14 @@ subprojects {
         testCompileOnly("org.projectlombok:lombok:1.18.30")
         testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
         implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.4"))
+        runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
         runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.7.3")
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        implementation(platform("software.amazon.awssdk:bom:2.21.0"))
     }
     project.tasks.test.get().finalizedBy(project.tasks.jacocoTestReport)
     project.tasks.jacocoTestReport {
