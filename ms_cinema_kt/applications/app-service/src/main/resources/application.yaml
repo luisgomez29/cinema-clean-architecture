@@ -24,7 +24,7 @@ adapters:
       max-idle-time: 10
   reactive-web:
     base-path: "/api/v1/cinema/"
-    genre: "/genres"
+    genre: "/genre"
 
 helpers:
   secrets-manager:
