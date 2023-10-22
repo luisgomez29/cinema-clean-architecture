@@ -16,7 +16,7 @@ import java.time.Duration
 
 @Configuration
 @EnableWebFluxSecurity
-open class WebFluxSecurityConfig {
+open class SecurityConfig {
 
     private val csp = "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; " +
             "object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
