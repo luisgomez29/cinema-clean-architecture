@@ -50,12 +50,12 @@ open class SecurityConfig {
     }
 
     @Bean
-    open fun corsWebFilter(@Value("\${cors.allowed-origins}") origins: Array<String>): CorsWebFilter {
+    open fun corsWebFilter(@Value("\${cors.allowed-origins}") origins: List<String>): CorsWebFilter {
         val config = CorsConfiguration()
         config.allowCredentials = true
-        config.allowedOrigins = listOf(*origins)
+        config.allowedOrigins = origins
         config.allowedHeaders = listOf(CorsConfiguration.ALL)
-        config.setAllowedMethods(mutableListOf("POST", "GET", "DELETE", "PUT"))
+        config.setAllowedMethods(listOf("POST", "GET", "DELETE", "PUT"))
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", config)
