@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import java.util.function.Function
 
-abstract class ReactiveAdapterOperations<E, D, I, R>(
+abstract class CoroutineAdapterOperations<E, D, I, R> protected constructor(
     private val repository: R,
     private val toDataFn: Function<E, D>,
     private val toEntityFn: Function<D, E>,
