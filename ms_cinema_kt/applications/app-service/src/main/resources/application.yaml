@@ -28,10 +28,10 @@ adapters:
 
 helpers:
   secrets-manager:
+    postgres: "cinema-local-secretrds-CNX"
     endpoint: "http://localhost:4566"
     cache-size: 5
     cache-time: 3600
-    postgres: "cinema-local-secretrds-CNX"
 
 
 management:

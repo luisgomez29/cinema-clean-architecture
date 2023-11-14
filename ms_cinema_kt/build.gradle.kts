@@ -4,7 +4,7 @@ plugins {
     id("co.com.bancolombia.cleanArchitecture") version "3.6.3"
     id("io.spring.dependency-management") version "1.1.3"
     id("org.springframework.boot") version "3.1.5" apply false
-    id("org.sonarqube") version "4.2.1.3168" apply true
+    id("org.sonarqube") version "4.4.1.3373" apply true
     id("jacoco") apply true
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.spring") version "1.9.10"
@@ -25,11 +25,11 @@ java {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
-sonarqube {
+sonar {
     val modules = subprojects.map { subproject ->
         subproject.projectDir.toString().replace(project.projectDir.toString() + "/", "")
     }
