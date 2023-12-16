@@ -1,7 +1,7 @@
 package co.com.luisgomez29.api.services.genre;
 
 import co.com.luisgomez29.api.BaseIntegration;
-import co.com.luisgomez29.api.config.WebFluxSecurityConfig;
+import co.com.luisgomez29.api.config.SecurityHeadersConfig;
 import co.com.luisgomez29.api.handlers.ExceptionHandler;
 import co.com.luisgomez29.api.handlers.ValidatorHandler;
 import co.com.luisgomez29.api.mapper.GenreDTOMapper;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {
-        WebFluxSecurityConfig.class,
+        SecurityHeadersConfig.class,
         ExceptionHandler.class,
         ValidatorHandler.class,
         GenreRouter.class,
