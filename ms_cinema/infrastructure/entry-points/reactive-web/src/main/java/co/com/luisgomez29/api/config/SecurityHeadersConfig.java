@@ -16,6 +16,12 @@ public class SecurityHeadersConfig implements WebFilter {
 
     @Override
     public @NotNull Mono<Void> filter(ServerWebExchange exchange, @NotNull WebFilterChain chain) {
+        final var path = exchange.getRequest().getPath().toString();
+
+        if (path.contains("swagger") || path.contains("api-docs")) {
+            return chain.filter(exchange);
+        }
+
         HttpHeaders headers = exchange.getResponse().getHeaders();
         headers.set("Content-Security-Policy", CSP);
         headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");

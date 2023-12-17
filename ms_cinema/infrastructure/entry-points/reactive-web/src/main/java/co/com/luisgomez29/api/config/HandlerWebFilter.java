@@ -18,6 +18,12 @@ import static co.com.luisgomez29.model.common.enums.GeneralExceptionMessage.HEAD
 public class HandlerWebFilter implements WebFilter {
     @Override
     public @NotNull Mono<Void> filter(ServerWebExchange exchange, @NotNull WebFilterChain chain) {
+        final var path = exchange.getRequest().getPath().toString();
+
+        if (path.contains("swagger") || path.contains("api-docs")) {
+            return chain.filter(exchange);
+        }
+
         final List<String> acceptHeaders = exchange.getRequest().getHeaders().get("Accept");
 
         if (acceptHeaders == null) {

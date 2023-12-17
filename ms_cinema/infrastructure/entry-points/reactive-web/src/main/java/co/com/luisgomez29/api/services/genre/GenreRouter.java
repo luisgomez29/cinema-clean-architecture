@@ -8,12 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import static org.springdoc.webflux.core.fn.SpringdocRouteBuilder.route;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
 @RequiredArgsConstructor
-public class GenreRouter {
+public non-sealed class GenreRouter extends GenreApiDoc {
 
     private final ApiProperties apiProperties;
 
@@ -22,10 +22,36 @@ public class GenreRouter {
     @Bean
     public RouterFunction<ServerResponse> routerFunction(GenreHandler handler) {
         return route()
-                .GET(apiProperties.genre(), accept(MediaType.APPLICATION_JSON), handler::list)
-                .GET(apiProperties.genre().concat(ID), accept(MediaType.APPLICATION_JSON), handler::getById)
-                .POST(apiProperties.genre(), accept(MediaType.APPLICATION_JSON), handler::save)
-                .PUT(apiProperties.genre().concat(ID), accept(MediaType.APPLICATION_JSON), handler::update)
-                .build();
+                .GET(apiProperties.genre(),
+                        accept(MediaType.APPLICATION_JSON),
+                        handler::list,
+                        list())
+                .build()
+                .and(route()
+                        .GET(
+                                apiProperties.genre().concat(ID),
+                                accept(MediaType.APPLICATION_JSON),
+                                handler::getById,
+                                listById()
+                        )
+                        .build()
+                )
+                .and(route()
+                        .POST(
+                                apiProperties.genre(),
+                                accept(MediaType.APPLICATION_JSON),
+                                handler::save,
+                                save()
+                        )
+                        .build()
+                ).and(route()
+                        .PUT(
+                                apiProperties.genre().concat(ID),
+                                accept(MediaType.APPLICATION_JSON),
+                                handler::update,
+                                update()
+                        )
+                        .build()
+                );
     }
 }

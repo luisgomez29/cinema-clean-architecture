@@ -4,6 +4,8 @@ import co.com.luisgomez29.model.common.enums.GeneralExceptionMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
@@ -23,6 +25,17 @@ class HandlerWebFilterTest {
     @BeforeEach
     void setUp() {
         filterChain = filterExchange -> Mono.empty();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/swagger", "/api-docs"})
+    void isSwaggerPathShouldNotAskHeaders(String path) {
+        var exchange = MockServerWebExchange.from(MockServerHttpRequest
+                .get(path)
+                .build());
+
+        StepVerifier.create(handlerFilterFunction.filter(exchange, filterChain))
+                .verifyComplete();
     }
 
     @Test

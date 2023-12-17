@@ -3,6 +3,8 @@ package co.com.luisgomez29.api.config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,17 @@ class SecurityHeadersConfigTest {
     @BeforeEach
     void setUp() {
         filterChain = filterExchange -> Mono.empty();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/swagger", "/api-docs"})
+    void isSwaggerPathShouldNotAddResponseHeaders(String path) {
+        var exchange = MockServerWebExchange.from(MockServerHttpRequest
+                .get(path)
+                .build());
+
+        StepVerifier.create(securityHeadersConfig.filter(exchange, filterChain))
+                .verifyComplete();
     }
 
     @Test

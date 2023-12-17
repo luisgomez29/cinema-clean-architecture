@@ -8,6 +8,7 @@ buildscript {
         log4j2Version = '2.21.1'
         mapstructVersion = '1.5.5.Final'
         awssdkVersion = '2.21.22'
+        openapiVersion = '2.3.0'
     }
 }
 

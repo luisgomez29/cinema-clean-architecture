@@ -1,4 +1,4 @@
 adapters:
   reactive-web:
     base-path: "/api/v1/cinema/"
-    genre: "/genres"
+    genre: "/genre"
