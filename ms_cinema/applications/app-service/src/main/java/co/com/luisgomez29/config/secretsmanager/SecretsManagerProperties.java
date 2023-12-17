@@ -7,6 +7,5 @@ public record SecretsManagerProperties(
         String endpoint,
         Integer cacheSize,
         Integer cacheTime,
-        String postgres
-) {
+        String postgres) {
 }

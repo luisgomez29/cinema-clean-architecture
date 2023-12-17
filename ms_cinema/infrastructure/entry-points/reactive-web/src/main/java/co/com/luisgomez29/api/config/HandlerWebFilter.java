@@ -1,6 +1,6 @@
 package co.com.luisgomez29.api.config;
 
-import co.com.luisgomez29.model.common.exception.TechnicalException;
+import co.com.luisgomez29.model.common.exception.GeneralException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.ACCEPT_HEADER_INVALID;
-import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.HEADER_MISSING_ERROR;
+import static co.com.luisgomez29.model.common.enums.GeneralExceptionMessage.ACCEPT_HEADER_INVALID;
+import static co.com.luisgomez29.model.common.enums.GeneralExceptionMessage.HEADER_MISSING_ERROR;
 
 @Component
 public class HandlerWebFilter implements WebFilter {
@@ -21,11 +21,11 @@ public class HandlerWebFilter implements WebFilter {
         final List<String> acceptHeaders = exchange.getRequest().getHeaders().get("Accept");
 
         if (acceptHeaders == null) {
-            return Mono.error(new TechnicalException(HEADER_MISSING_ERROR));
+            return Mono.error(new GeneralException(HEADER_MISSING_ERROR));
         }
 
         if (!MediaType.APPLICATION_JSON_VALUE.equals(acceptHeaders.get(0))) {
-            return Mono.error(new TechnicalException(ACCEPT_HEADER_INVALID));
+            return Mono.error(new GeneralException(ACCEPT_HEADER_INVALID));
         }
 
         return chain.filter(exchange);

@@ -72,7 +72,7 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
         statusAssertionsWebClientGet(url)
                 .is5xxServerError()
                 .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("message").asText())
+                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
                         .isEqualTo(GENRE_FIND_ALL.getMessage()));
     }
 
@@ -82,9 +82,9 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
                 .thenReturn(Mono.error(new BusinessException(GENRE_NOT_FOUND)));
 
         statusAssertionsWebClientGet(url.concat(ID), 1)
-                .is5xxServerError()
+                .is4xxClientError()
                 .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("message").asText())
+                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
                         .isEqualTo(GENRE_NOT_FOUND.getMessage()));
     }
 
@@ -97,7 +97,7 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
         statusAssertionsWebClientPost(url, request)
                 .is5xxServerError()
                 .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("message").asText())
+                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
                         .isEqualTo(GENRE_SAVE.getMessage()));
     }
 
@@ -110,7 +110,7 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
         statusAssertionsWebClientPut(url.concat(ID), request, genre.getId())
                 .is5xxServerError()
                 .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("message").asText())
+                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
                         .isEqualTo(GENRE_UPDATE.getMessage()));
     }
 

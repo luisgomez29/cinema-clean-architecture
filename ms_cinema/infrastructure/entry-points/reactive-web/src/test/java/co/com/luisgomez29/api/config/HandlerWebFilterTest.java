@@ -1,6 +1,6 @@
 package co.com.luisgomez29.api.config;
 
-import co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage;
+import co.com.luisgomez29.model.common.enums.GeneralExceptionMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +32,7 @@ class HandlerWebFilterTest {
                 .build());
 
         StepVerifier.create(handlerFilterFunction.filter(exchange, filterChain))
-                .expectErrorMessage(TechnicalExceptionMessage.HEADER_MISSING_ERROR.getMessage())
+                .expectErrorMessage(GeneralExceptionMessage.HEADER_MISSING_ERROR.getMessage())
                 .verify();
     }
 
@@ -44,7 +44,7 @@ class HandlerWebFilterTest {
                 .build());
 
         StepVerifier.create(handlerFilterFunction.filter(exchange, filterChain).log())
-                .expectErrorMessage(TechnicalExceptionMessage.ACCEPT_HEADER_INVALID.getMessage())
+                .expectErrorMessage(GeneralExceptionMessage.ACCEPT_HEADER_INVALID.getMessage())
                 .verify();
     }
 

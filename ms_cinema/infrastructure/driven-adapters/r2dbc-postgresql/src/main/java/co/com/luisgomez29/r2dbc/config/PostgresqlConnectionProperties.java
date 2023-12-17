@@ -6,7 +6,6 @@ public record PostgresqlConnectionProperties(
         String dbname,
         String schema,
         String username,
-        String password
-) {
+        String password) {
 
 }

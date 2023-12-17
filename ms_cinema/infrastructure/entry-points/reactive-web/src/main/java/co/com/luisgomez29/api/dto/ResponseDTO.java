@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Data
 @Builder(toBuilder = true)
@@ -19,26 +20,33 @@ public class ResponseDTO<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final T data;
 
-    @SuppressWarnings("rawtypes")
-    public static <T> ResponseDTO success(T data, ServerRequest request) {
-        return ResponseDTO.builder()
-                .meta(MetaDTO.build(data, request))
-                .data(data)
-                .build();
-    }
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private final T error;
 
-    public static <T> Mono<ServerResponse> responseOk(T response) {
-        return buildResponse(HttpStatus.OK, response);
-    }
-
-    public static <T> Mono<ServerResponse> responseFail(T body) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, body);
-    }
-
-    public static <T> Mono<ServerResponse> buildResponse(HttpStatus status, T body) {
+    private static <T> Mono<ServerResponse> buildResponse(HttpStatus status, T body) {
         return ServerResponse
                 .status(status)
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .bodyValue(body);
     }
+
+    public static <T> Mono<ServerResponse> success(ServerRequest request, T data) {
+        return buildResponse(
+                HttpStatus.OK,
+                ResponseDTO.builder()
+                        .meta(MetaDTO.build(data, request))
+                        .data(data)
+                        .build()
+        );
+    }
+
+    public static <T> Mono<ServerResponse> failed(ServerRequest request, T error, HttpStatus status) {
+        return buildResponse(status,
+                ResponseDTO.builder()
+                        .meta(MetaDTO.build(error, request))
+                        .error(error)
+                        .build()
+        );
+    }
+
 }

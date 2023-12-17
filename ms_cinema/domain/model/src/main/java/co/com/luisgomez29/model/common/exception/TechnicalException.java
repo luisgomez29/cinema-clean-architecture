@@ -14,9 +14,9 @@ public class TechnicalException extends RuntimeException {
         this.technicalExceptionMessage = technicalExceptionEnum;
     }
 
-    public TechnicalException(String message, TechnicalExceptionMessage technicalException) {
+    public TechnicalException(String message, TechnicalExceptionMessage technicalExceptionMessage) {
         super(message);
-        this.technicalExceptionMessage = technicalException;
+        this.technicalExceptionMessage = technicalExceptionMessage;
     }
 
     public TechnicalException(Throwable cause, TechnicalExceptionMessage message) {

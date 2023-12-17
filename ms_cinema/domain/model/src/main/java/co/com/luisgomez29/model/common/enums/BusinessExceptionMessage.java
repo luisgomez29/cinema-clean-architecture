@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum BusinessExceptionMessage {
 
-    BAD_REQUEST_BODY("BE001", "Error in body request"),
-    GENRE_NOT_FOUND("BE001", "Genre not found");
+    GENRE_NOT_FOUND("BE002", "Genre not found");
 
     private final String code;
     private final String message;

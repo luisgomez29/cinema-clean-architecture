@@ -1,6 +1,6 @@
 package co.com.luisgomez29.api.handlers;
 
-import co.com.luisgomez29.model.common.exception.TechnicalException;
+import co.com.luisgomez29.model.common.exception.GeneralException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.HEADER_MISSING_ERROR;
-import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.INVALID_BODY_PARAMETER;
+import static co.com.luisgomez29.model.common.enums.GeneralExceptionMessage.HEADER_MISSING_ERROR;
+import static co.com.luisgomez29.model.common.enums.GeneralExceptionMessage.INVALID_BODY_PARAMETER;
 
 @Component
 @RequiredArgsConstructor
@@ -22,8 +22,8 @@ public class ValidatorHandler {
 
     private <T> void validateConstraints(Set<ConstraintViolation<T>> constraints) {
         if (!constraints.isEmpty()) {
-            log.error(new TechnicalException(getMessage(constraints), INVALID_BODY_PARAMETER));
-            throw new TechnicalException(getMessage(constraints), INVALID_BODY_PARAMETER);
+            log.error(new GeneralException(getMessage(constraints), INVALID_BODY_PARAMETER));
+            throw new GeneralException(getMessage(constraints), INVALID_BODY_PARAMETER);
         }
     }
 
@@ -40,7 +40,7 @@ public class ValidatorHandler {
     public <T> void validateObjectHeaders(T object) {
         Set<ConstraintViolation<T>> constraints = validator.validate(object);
         if (!constraints.isEmpty()) {
-            throw new TechnicalException(getMessage(constraints), HEADER_MISSING_ERROR);
+            throw new GeneralException(getMessage(constraints), HEADER_MISSING_ERROR);
         }
     }
 
