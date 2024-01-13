@@ -1,13 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val springBootVersion: String by project
+val jacocoVersion: String by project
+val awssdkVersion: String by project
+val kotlinxCoroutinesVersion: String by project
+
 plugins {
-    id("co.com.bancolombia.cleanArchitecture") version "3.6.3"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("org.springframework.boot") version "3.1.5" apply false
+    id("co.com.bancolombia.cleanArchitecture") version "3.12.2"
+    id("io.spring.dependency-management") version "1.1.4"
+    id("org.springframework.boot") version "3.2.1" apply false
     id("org.sonarqube") version "4.4.1.3373" apply true
     id("jacoco") apply true
-    kotlin("jvm") version "1.9.10"
-    kotlin("plugin.spring") version "1.9.10"
+    kotlin("jvm") version "1.9.21"
+    kotlin("plugin.spring") version "1.9.21"
 }
 
 allprojects {
@@ -51,7 +56,7 @@ sonar {
         property("sonar.java.coveragePlugin", "jacoco")
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
-            "build/reports/jacoco/test/jacocoTestReport.xml"
+            "build/reports/jacocoMergedReport/jacocoMergedReport.xml"
         )
     }
 }
@@ -61,12 +66,12 @@ subprojects {
     apply(plugin = "jacoco")
     apply(plugin = "io.spring.dependency-management")
     dependencies {
-        implementation(platform("software.amazon.awssdk:bom:2.21.5"))
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.5"))
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.7.3")
+        implementation(platform("software.amazon.awssdk:bom:$awssdkVersion"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlinxCoroutinesVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$kotlinxCoroutinesVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlinxCoroutinesVersion")
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -85,7 +90,7 @@ subprojects {
 }
 
 jacoco {
-    toolVersion = "0.8.10"
+    toolVersion = jacocoVersion
     reportsDirectory = layout.buildDirectory.dir("reports")
 }
 
@@ -95,7 +100,7 @@ tasks.withType<JacocoReport> {
     sourceDirectories.setFrom(files(subprojects.map { project -> project.sourceSets.main.get().allSource.srcDirs }))
     classDirectories.setFrom(files(subprojects.map { project -> project.sourceSets.main.get().output }))
     executionData.setFrom(
-        project.fileTree(project.buildDir) {
+        project.fileTree('.') {
             include("**/build/jacoco/test.exec")
         }
     )
