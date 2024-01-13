@@ -26,7 +26,7 @@ public class SecurityHeadersConfig implements WebFilter {
         headers.set("Content-Security-Policy", CSP);
         headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
         headers.set("X-Content-Type-Options", "nosniff");
-        headers.set("Server", "");
+        headers.remove("Server");
         headers.set("Cache-Control", "no-store");
         headers.set("Pragma", "no-cache");
         headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
