@@ -1,12 +1,15 @@
+val awsSecretsManagerVersion: String by project
+
 apply(plugin = "org.springframework.boot")
 
+
 dependencies {
-	implementation(project(":reactive-web"))
+    implementation(project(":reactive-web"))
     implementation(project(":r2dbc-postgresql"))
     implementation(project(":model"))
     implementation(project(":usecase"))
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("com.github.bancolombia:aws-secrets-manager-sync:4.1.0")
+    implementation("com.github.bancolombia:aws-secrets-manager-sync:$awsSecretsManagerVersion")
     implementation("software.amazon.awssdk:secretsmanager")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
     modules {
