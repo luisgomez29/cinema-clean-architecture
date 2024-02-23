@@ -1,4 +1,4 @@
-rootProject.name = "ms_cinema"
+rootProject.name = "ms_cinema_kt"
 
 include(":app-service")
 include(":model")
