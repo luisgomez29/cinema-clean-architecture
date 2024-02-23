@@ -6,13 +6,13 @@ val awssdkVersion: String by project
 val kotlinxCoroutinesVersion: String by project
 
 plugins {
-    id("co.com.bancolombia.cleanArchitecture") version "3.12.2"
+    id("co.com.bancolombia.cleanArchitecture") version "3.15.1"
     id("io.spring.dependency-management") version "1.1.4"
-    id("org.springframework.boot") version "3.2.1" apply false
+    id("org.springframework.boot") version "3.2.3" apply false
     id("org.sonarqube") version "4.4.1.3373" apply true
     id("jacoco") apply true
-    kotlin("jvm") version "1.9.21"
-    kotlin("plugin.spring") version "1.9.21"
+    kotlin("jvm") version "1.9.22"
+    kotlin("plugin.spring") version "1.9.22"
 }
 
 allprojects {
