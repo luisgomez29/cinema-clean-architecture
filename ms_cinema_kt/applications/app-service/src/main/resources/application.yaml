@@ -1,0 +1,53 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "ms_cinema"
+  devtools:
+    add-properties: false
+  profiles:
+    include: "local"
+  webflux:
+    base-path: "/api/v1/cinema"
+  logging:
+    level:
+      root: "INFO"
+      reactor:
+        netty: false
+adapters:
+  postgres:
+    pool:
+      initial-size: 12
+      max-size: 15
+      max-idle-time: 10
+  reactive-web:
+    base-path: "/api/v1/cinema/"
+    genre: "/genre"
+
+helpers:
+  secrets-manager:
+    postgres: "cinema-local-secretrds-CNX"
+    endpoint: "http://localhost:4566"
+    cache-size: 5
+    cache-time: 3600
+
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: "never"
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "health, liveness, readiness"
+      base-path: /
+      path-mapping:
+        health: "health"
+        liveness: "liveness"
+        readiness: "readiness"
+
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
