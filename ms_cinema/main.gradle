@@ -6,29 +6,22 @@ allprojects {
     }
 }
 
+apply plugin: 'info.solidsoft.pitest.aggregator'
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'info.solidsoft.pitest'
     apply plugin: 'io.spring.dependency-management'
 
     compileJava.dependsOn validateStructure
     sourceCompatibility = JavaVersion.VERSION_17
 
-    ext['jackson-bom.version'] = '2.17.0'
-    ext['log4j2.version'] = '2.23.1'
-
-    test {
-        useJUnitPlatform()
-    }
-
     dependencies {
         implementation 'io.projectreactor:reactor-core'
         implementation 'io.projectreactor.addons:reactor-extra'
         implementation platform("software.amazon.awssdk:bom:${awssdkVersion}")
-
-        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.8.RELEASE'
-        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitJupiterEngineVersion}"
         testImplementation 'io.projectreactor:reactor-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
@@ -36,6 +29,27 @@ subprojects {
         testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
         testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    }
+
+    ext['jackson-bom.version'] = '2.17.0'
+    ext['log4j2.version'] = '2.23.1'
+
+    pitest {
+        targetClasses = ['co.com.luisgomez29.*']
+        verbose = true
+        outputFormats = ['XML', 'HTML']
+        threads = 8
+        exportLineCoverage = true
+        junit5PluginVersion = '1.2.1'
+        timestampedReports = false
+        failWhenNoMutations = false
+        excludedClasses = [
+                'co.com.luisgomez29.model.*'
+        ]
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
     tasks.withType(Test).configureEach {
