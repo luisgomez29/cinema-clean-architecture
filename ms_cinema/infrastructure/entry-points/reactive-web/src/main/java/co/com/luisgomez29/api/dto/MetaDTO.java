@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MetaDTO {
+public final class MetaDTO {
 
     private static final String DEPLOYMENT_VERSION = "0.0.1";
     private static final Integer ONE = 1;

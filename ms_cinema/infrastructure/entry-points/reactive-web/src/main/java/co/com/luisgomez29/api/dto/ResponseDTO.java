@@ -13,7 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Data
 @Builder(toBuilder = true)
-public class ResponseDTO<T> {
+public final class ResponseDTO<T> {
 
     private final MetaDTO.Meta meta;
 

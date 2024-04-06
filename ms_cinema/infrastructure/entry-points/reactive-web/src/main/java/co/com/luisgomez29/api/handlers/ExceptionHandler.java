@@ -93,11 +93,9 @@ public class ExceptionHandler extends AbstractErrorWebExceptionHandler {
                         .title(throwable.getMessage())
                         .source(PROJECT_NAME)
                         .build())
-                .map(e -> {
-                    if (HttpStatus.NOT_FOUND.toString().equals(e.getMessage()))
-                        return Tuples.of(e, HttpStatus.NOT_FOUND);
-                    return Tuples.of(e, HttpStatus.INTERNAL_SERVER_ERROR);
-                });
+                .map(e -> e.getMessage().contains(HttpStatus.NOT_FOUND.toString())
+                        ? Tuples.of(e, HttpStatus.NOT_FOUND) : Tuples.of(e, HttpStatus.INTERNAL_SERVER_ERROR)
+                );
     }
 
 }
