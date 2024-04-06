@@ -14,6 +14,9 @@ subprojects {
     compileJava.dependsOn validateStructure
     sourceCompatibility = JavaVersion.VERSION_17
 
+    ext['jackson-bom.version'] = '2.17.0'
+    ext['log4j2.version'] = '2.23.1'
+
     test {
         useJUnitPlatform()
     }
@@ -82,5 +85,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.5'
+    gradleVersion = '8.7'
+    distributionSha256Sum = '544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d'
 }
