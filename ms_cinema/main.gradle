@@ -21,9 +21,10 @@ subprojects {
         implementation 'io.projectreactor:reactor-core'
         implementation 'io.projectreactor.addons:reactor-extra'
         implementation platform("software.amazon.awssdk:bom:${awssdkVersion}")
-        testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitJupiterEngineVersion}"
         testImplementation 'io.projectreactor:reactor-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.9.RELEASE'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
@@ -31,7 +32,7 @@ subprojects {
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 
-    ext['jackson-bom.version'] = '2.17.0'
+    ext['jackson-bom.version'] = '2.17.2'
     ext['log4j2.version'] = '2.23.1'
 
     pitest {
@@ -41,10 +42,14 @@ subprojects {
         threads = 8
         exportLineCoverage = true
         junit5PluginVersion = '1.2.1'
+        pitestVersion = '1.16.1'
         timestampedReports = false
         failWhenNoMutations = false
         excludedClasses = [
                 'co.com.luisgomez29.model.*'
+        ]
+        jvmArgs = [
+                "-XX:+AllowRedefinitionToAddDeleteMethods"
         ]
     }
 
@@ -99,6 +104,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.7'
-    distributionSha256Sum = '544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d'
+    gradleVersion = '8.9'
+    distributionSha256Sum = 'd725d707bfabd4dfdc958c624003b3c80accc03f7037b5122c4b1d0ef15cecab'
 }
