@@ -10,6 +10,7 @@ public enum TechnicalExceptionMessage {
 
     INTERNAL_SERVER_ERROR("TE001", "Internal server error"),
     SECRET_EXCEPTION("TE002", "An error occurred while trying to get AWS secrets"),
+    JSON_PROCESSING("TE002", "Error processing request for logs"),
 
     GENRE_FIND_ALL("TE008", "Error getting all genres"),
     GENRE_FIND_BY_ID("TE009", "Error getting genre by id"),
