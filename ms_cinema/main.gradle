@@ -12,6 +12,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'info.solidsoft.pitest'
+    apply plugin: 'org.owasp.dependencycheck'
     apply plugin: 'io.spring.dependency-management'
 
     compileJava.dependsOn validateStructure

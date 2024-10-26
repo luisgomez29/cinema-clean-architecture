@@ -9,7 +9,11 @@ buildscript {
         awssdkVersion = '2.29.1'
         openapiVersion = '2.6.0'
         secretsVersion = '4.4.22'
+        owaspVersion = '11.0.0'
         pitestVersion = '1.15.0'
+    }
+    dependencies {
+        classpath "org.owasp:dependency-check-gradle: ${owaspVersion}"
     }
 }
 
@@ -17,6 +21,7 @@ plugins {
     id 'co.com.bancolombia.cleanArchitecture' version "${cleanArchitectureVersion}"
     id 'org.springframework.boot' version "${springBootVersion}" apply false
     id 'info.solidsoft.pitest' version "${pitestVersion}" apply false
+    id 'org.owasp.dependencycheck' version "${owaspVersion}"
     id 'org.sonarqube' version "${sonarVersion}"
     id 'jacoco'
 }
