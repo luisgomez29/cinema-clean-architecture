@@ -23,7 +23,7 @@ subprojects {
         implementation platform("software.amazon.awssdk:bom:${awssdkVersion}")
         testImplementation 'io.projectreactor:reactor-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.9.RELEASE'
+        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.10.RELEASE'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -32,8 +32,8 @@ subprojects {
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 
-    ext['jackson-bom.version'] = '2.17.2'
-    ext['log4j2.version'] = '2.23.1'
+//    ext['jackson-bom.version'] = '2.17.2'
+//    ext['log4j2.version'] = '2.23.1'
 
     pitest {
         targetClasses = ['co.com.luisgomez29.*']
@@ -42,13 +42,15 @@ subprojects {
         threads = 8
         exportLineCoverage = true
         junit5PluginVersion = '1.2.1'
-        pitestVersion = '1.16.2'
+        pitestVersion = '1.17.0'
         timestampedReports = false
         failWhenNoMutations = false
+        useClasspathFile = true
         excludedClasses = [
                 'co.com.luisgomez29.model.*'
         ]
         jvmArgs = [
+                // To avoid: BlockHoundTestExecutionListener could not be instantiated
                 "-XX:+AllowRedefinitionToAddDeleteMethods"
         ]
     }
@@ -79,6 +81,27 @@ subprojects {
 
 }
 
+// Tarea para el report aggregate, con esto tendremos unificados los reportes xml que SonarQube recibe
+pitestReportAggregate {
+    doLast {
+        def reportDir = layout.buildDirectory.dir("reports/pitest").get().asFile
+        def consolidatedReport = new File(reportDir, 'mutations.xml')
+        consolidatedReport.withWriter { writer ->
+            writer.write("<mutations>\n")
+            subprojects.each { subproject ->
+                def xmlReport = subproject.layout.buildDirectory.file("reports/pitest/mutations.xml").get().asFile
+                if (xmlReport.exists()) {
+                    def xmlContent = xmlReport.text
+                    xmlContent = xmlContent.replaceAll("<\\?xml[^>]*>", "")
+                    xmlContent = xmlContent.replaceAll("</?mutations( partial=\"true\")?>", "")
+                    writer.write(xmlContent.trim() + "\n")
+                }
+            }
+            writer.write("</mutations>")  // Cierra la etiqueta <mutations> al final
+        }
+    }
+}
+
 jacoco {
     toolVersion = "${jacocoVersion}"
     reportsDirectory.set(layout.buildDirectory.dir("reports"))
@@ -104,6 +127,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.10'
-    distributionSha256Sum = '5b9c5eb3f9fc2c94abaea57d90bd78747ca117ddbbf96c859d3741181a12bf2a'
+    gradleVersion = '8.10.2'
+    distributionSha256Sum = '31c55713e40233a8303827ceb42ca48a47267a0ad4bab9177123121e71524c26'
+    validateDistributionUrl = true
 }
