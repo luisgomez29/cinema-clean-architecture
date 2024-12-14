@@ -15,8 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -35,9 +35,9 @@ import static org.mockito.Mockito.when;
 @WebFluxTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GenreRouterTest extends BaseIntegration {
-    @MockBean
+    @MockitoBean
     private CinemaUseCase useCase;
-    @MockBean
+    @MockitoBean
     private GenreDTOMapper mapper;
 
     private final static String ID = "/{id}";

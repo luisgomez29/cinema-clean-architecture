@@ -1,3 +1,8 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
 adapters:
   reactive-web:
     base-path: "/api/v1/cinema/"
