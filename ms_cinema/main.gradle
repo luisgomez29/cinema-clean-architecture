@@ -16,7 +16,11 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     compileJava.dependsOn validateStructure
-    sourceCompatibility = JavaVersion.VERSION_17
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 
     dependencies {
         implementation 'io.projectreactor:reactor-core'
@@ -31,6 +35,7 @@ subprojects {
         testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
         testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        testImplementation "com.arcmutate:arcmutate-spring:${arcmutateSpringversion}"
     }
 
 //    ext['jackson-bom.version'] = '2.17.2'
@@ -43,7 +48,7 @@ subprojects {
         threads = 8
         exportLineCoverage = true
         junit5PluginVersion = '1.2.1'
-        pitestVersion = '1.17.0'
+        pitestVersion = '1.17.2'
         timestampedReports = false
         failWhenNoMutations = false
         useClasspathFile = true
@@ -128,7 +133,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.10.2'
-    distributionSha256Sum = '31c55713e40233a8303827ceb42ca48a47267a0ad4bab9177123121e71524c26'
+    gradleVersion = '8.11.1'
+    distributionSha256Sum = 'f397b287023acdba1e9f6fc5ea72d22dd63669d59ed4a289a29b1a76eee151c6'
     validateDistributionUrl = true
 }
