@@ -1,8 +1,8 @@
 allprojects {
     repositories {
         mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
+        maven { url = "https://repo.spring.io/snapshot" }
+        maven { url = "https://repo.spring.io/milestone" }
     }
 }
 
@@ -43,12 +43,12 @@ subprojects {
 
     pitest {
         targetClasses = ['co.com.luisgomez29.*']
-        verbose = true
+        verbose = false
         outputFormats = ['XML', 'HTML']
         threads = 8
         exportLineCoverage = true
         junit5PluginVersion = '1.2.1'
-        pitestVersion = '1.17.2'
+        pitestVersion = '1.17.4'
         timestampedReports = false
         failWhenNoMutations = false
         useClasspathFile = true
@@ -133,7 +133,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.11.1'
-    distributionSha256Sum = 'f397b287023acdba1e9f6fc5ea72d22dd63669d59ed4a289a29b1a76eee151c6'
+    gradleVersion = '8.12.1'
+    distributionSha256Sum = '8d97a97984f6cbd2b85fe4c60a743440a347544bf18818048e611f5288d46c94'
     validateDistributionUrl = true
 }
