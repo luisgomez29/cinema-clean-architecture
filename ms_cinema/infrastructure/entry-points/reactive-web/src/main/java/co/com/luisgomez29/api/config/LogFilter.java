@@ -17,6 +17,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -35,28 +36,35 @@ public class LogFilter implements WebFilter {
         }
 
         var method = request.getMethod();
-        var queryParams = request.getQueryParams();
 
         if (method.equals(HttpMethod.GET)) {
             log.info("method: {}, path: {}, headers: {}, queryParams: {}",
-                    method, path, getHeaders(request), queryParams);
+                    method, path, getHeaders(request), request.getQueryParams());
             return chain.filter(exchange);
         }
 
         return DataBufferUtils.join(request.getBody())
-                .map(this::getBytes)
-                .flatMap(bytes -> {
+                .flatMap(dataBuffer -> logRequest(dataBuffer, method, path, request))
+                .flatMap(bytes -> getChainFilter(exchange, chain, bytes, request));
+    }
+
+    private Mono<byte[]> logRequest(DataBuffer dataBuffer, HttpMethod method, String path, ServerHttpRequest request) {
+        return Mono.fromCallable(() -> {
                     try {
+                        var bytes = getBytes(dataBuffer);
                         var requestBody = new String(bytes, StandardCharsets.UTF_8);
                         var mapper = new ObjectMapper();
                         JsonNode node = mapper.readTree(requestBody);
                         log.info("method: {}, path: {}, headers: {}, queryParams: {}, body: {}",
-                                method, path, getHeaders(request), queryParams, mapper.writeValueAsString(node));
-                        return getChainFilter(exchange, chain, bytes, request);
+                                method, path, getHeaders(request), request.getQueryParams(),
+                                mapper.writeValueAsString(node)
+                        );
+                        return bytes;
                     } catch (JsonProcessingException e) {
                         throw new TechnicalException(TechnicalExceptionMessage.JSON_PROCESSING);
                     }
-                });
+                })
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     protected byte[] getBytes(DataBuffer dataBuffer) {
@@ -99,4 +107,3 @@ public class LogFilter implements WebFilter {
                 .toList();
     }
 }
-

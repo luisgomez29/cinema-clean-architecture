@@ -20,6 +20,7 @@ import reactor.test.StepVerifier;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 class LogFilterTest {
@@ -61,12 +62,24 @@ class LogFilterTest {
 
     @Test
     void filterPostRequest() {
+        var body = "{\"code\": \"test\"}";
         exchange = MockServerWebExchange.from(MockServerHttpRequest
                 .post("/test")
                 .header(HttpHeaders.ACCEPT, "application/json")
-                .body("{\"code\": \"test\"}"));
+                .body(body));
         StepVerifier.create(logFilter.filter(exchange, webFilterChain))
                 .verifyComplete();
+
+        String decoratedBody = exchange.getRequest()
+                .getBody()
+                .map(dataBuffer -> StandardCharsets.UTF_8.decode(
+                                        dataBuffer.readableByteBuffers().next()
+                                )
+                                .toString()
+                )
+                .blockFirst();
+
+        assertEquals(body, decoratedBody);
     }
 
     @Test

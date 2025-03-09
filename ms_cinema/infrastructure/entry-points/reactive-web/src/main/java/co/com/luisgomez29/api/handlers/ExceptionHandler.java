@@ -81,7 +81,7 @@ public class ExceptionHandler extends AbstractErrorWebExceptionHandler {
                         .id(ex.getGeneralExceptionMessage().getCode())
                         .title(ex.getGeneralExceptionMessage().toString())
                         .type("General")
-                        .message(ex.getGeneralExceptionMessage().getMessage())
+                        .message(ex.getMessage())
                         .source(PROJECT_NAME)
                         .build())
                 .map(e -> Tuples.of(e, HttpStatus.resolve(ex.getGeneralExceptionMessage().getStatusCode())));
