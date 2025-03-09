@@ -37,4 +37,11 @@ public class PostgreSQLConnectionPool {
 
         return new ConnectionPool(poolConfiguration);
     }
+
+//    @Bean
+//    public TransactionalOperator transactionalOperator(
+//            @Qualifier("postgresConnection") ConnectionFactory connectionFactory) {
+//        return TransactionalOperator.create(new R2dbcTransactionManager(connectionFactory));
+//    }
+
 }

@@ -7,4 +7,6 @@ dependencies {
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${openapiVersion}"
+    implementation "com.bucket4j:bucket4j_jdk17-core:${bucket4jVersion}"
+    implementation "com.bucket4j:bucket4j_jdk17-postgresql:${bucket4jVersion}"
 }

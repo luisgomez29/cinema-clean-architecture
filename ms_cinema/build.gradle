@@ -11,6 +11,7 @@ buildscript {
         secretsVersion = '4.4.30'
         owaspVersion = '12.1.0'
         pitestVersion = '1.15.0'
+        bucket4jVersion = '8.14.0'
         arcmutateSpringversion = '1.0.0'
     }
     dependencies {
