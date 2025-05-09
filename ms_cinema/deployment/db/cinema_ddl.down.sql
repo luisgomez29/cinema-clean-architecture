@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS schcined.genre CASCADE;
 
 DROP TABLE IF EXISTS schcined.movie CASCADE;
 
+DROP TABLE IF EXISTS schcined.bucket CASCADE;
+
 DROP SCHEMA IF EXISTS schcined;
 
 DROP EXTENSION IF EXISTS unaccent;

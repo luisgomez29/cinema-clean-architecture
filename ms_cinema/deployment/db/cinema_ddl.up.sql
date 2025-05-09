@@ -29,3 +29,7 @@ CREATE TABLE schcined.movie(
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP
 );
+
+-- https://bucket4j.com/8.14.0/toc.html#bucket4j-postgresql
+CREATE TABLE IF NOT EXISTS schcined.bucket(id BIGINT PRIMARY KEY, state BYTEA);
+

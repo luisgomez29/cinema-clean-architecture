@@ -47,8 +47,8 @@ subprojects {
         outputFormats = ['XML', 'HTML']
         threads = 8
         exportLineCoverage = true
-        junit5PluginVersion = '1.2.1'
-        pitestVersion = '1.18.2'
+        junit5PluginVersion = '1.2.2'
+        pitestVersion = '1.19.1'
         timestampedReports = false
         failWhenNoMutations = false
         useClasspathFile = true
@@ -133,7 +133,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.13'
-    distributionSha256Sum = '20f1b1176237254a6fc204d8434196fa11a4cfb387567519c61556e8710aed78'
+    gradleVersion = '8.14'
+    distributionSha256Sum = '61ad310d3c7d3e5da131b76bbf22b5a4c0786e9d892dae8c1658d4b484de3caa'
     validateDistributionUrl = true
 }
