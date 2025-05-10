@@ -6,6 +6,12 @@ pluginManagement {
     }
 }
 
+buildCache {
+    local {
+        directory = new File(rootDir, 'build-cache')
+    }
+}
+
 rootProject.name = 'ms_cinema'
 
 include ':app-service'
