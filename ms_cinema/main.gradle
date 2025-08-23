@@ -28,7 +28,7 @@ subprojects {
         implementation platform("software.amazon.awssdk:bom:${awssdkVersion}")
         testImplementation 'io.projectreactor:reactor-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.11.RELEASE'
+        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.13.RELEASE'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -48,7 +48,7 @@ subprojects {
         threads = 8
         exportLineCoverage = true
         junit5PluginVersion = '1.2.2'
-        pitestVersion = '1.19.1'
+        pitestVersion = '1.20.2'
         timestampedReports = false
         failWhenNoMutations = false
         useClasspathFile = true
@@ -133,7 +133,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('wrapper') {
-    gradleVersion = '8.14'
-    distributionSha256Sum = '61ad310d3c7d3e5da131b76bbf22b5a4c0786e9d892dae8c1658d4b484de3caa'
+    gradleVersion = '8.14.3'
+    distributionSha256Sum = '8fad3d78296ca518113f3d29016617c7f9367dc005f932bd9d93bf45ba46072b'
     validateDistributionUrl = true
 }
