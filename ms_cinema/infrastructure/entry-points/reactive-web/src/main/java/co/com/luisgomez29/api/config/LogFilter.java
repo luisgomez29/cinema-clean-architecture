@@ -1,10 +1,5 @@
 package co.com.luisgomez29.api.config;
 
-import co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage;
-import co.com.luisgomez29.model.common.exception.TechnicalException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -18,6 +13,8 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -50,19 +47,15 @@ public class LogFilter implements WebFilter {
 
     private Mono<byte[]> logRequest(DataBuffer dataBuffer, HttpMethod method, String path, ServerHttpRequest request) {
         return Mono.fromCallable(() -> {
-                    try {
-                        var bytes = getBytes(dataBuffer);
-                        var requestBody = new String(bytes, StandardCharsets.UTF_8);
-                        var mapper = new ObjectMapper();
-                        JsonNode node = mapper.readTree(requestBody);
-                        log.info("method: {}, path: {}, headers: {}, queryParams: {}, body: {}",
-                                method, path, getHeaders(request), request.getQueryParams(),
-                                mapper.writeValueAsString(node)
-                        );
-                        return bytes;
-                    } catch (JsonProcessingException e) {
-                        throw new TechnicalException(TechnicalExceptionMessage.JSON_PROCESSING);
-                    }
+                    var bytes = getBytes(dataBuffer);
+                    var requestBody = new String(bytes, StandardCharsets.UTF_8);
+                    var mapper = new JsonMapper();
+                    JsonNode node = mapper.readTree(requestBody);
+                    log.info("method: {}, path: {}, headers: {}, queryParams: {}, body: {}",
+                            method, path, getHeaders(request), request.getQueryParams(),
+                            mapper.writeValueAsString(node)
+                    );
+                    return bytes;
                 })
                 .subscribeOn(Schedulers.boundedElastic());
     }
@@ -101,7 +94,7 @@ public class LogFilter implements WebFilter {
                 "postman-"
         );
         return request.getHeaders()
-                .entrySet()
+                .headerSet()
                 .stream()
                 .filter(h -> excludedHeaders.stream().noneMatch(e -> h.getKey().toLowerCase().startsWith(e)))
                 .toList();

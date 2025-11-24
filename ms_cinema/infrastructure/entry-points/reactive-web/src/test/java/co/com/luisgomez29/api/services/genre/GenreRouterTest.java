@@ -9,16 +9,16 @@ import co.com.luisgomez29.model.common.enums.SuccessMessage;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.model.response.ResponseStatus;
 import co.com.luisgomez29.usecase.cinema.CinemaUseCase;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tools.jackson.databind.JsonNode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,7 +40,7 @@ class GenreRouterTest extends BaseIntegration {
     @MockitoBean
     private GenreDTOMapper mapper;
 
-    private final static String ID = "/{id}";
+    private static final String ID = "/{id}";
     private String url;
     private String request;
     private Genre genre;

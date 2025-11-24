@@ -1,18 +1,18 @@
 buildscript {
     ext {
-        cleanArchitectureVersion = '3.26.1'
-        springBootVersion = '3.5.6'
-        sonarVersion = '6.3.1.5724'
-        jacocoVersion = '0.8.13'
+        cleanArchitectureVersion = '3.27.0'
+        springBootVersion = '4.0.0'
+        sonarVersion = '7.1.0.6387'
+        jacocoVersion = '0.8.14'
         lombokVersion = '1.18.42'
         mapstructVersion = '1.6.3'
-        awssdkVersion = '2.34.7'
-        openapiVersion = '2.8.13'
+        awssdkVersion = '2.39.2'
+        openapiVersion = '3.0.0'
         secretsVersion = '4.4.35'
-        owaspVersion = '12.1.6'
-        pitestVersion = '1.19.0-rc.1'
+        owaspVersion = '12.1.9'
+        pitestVersion = '1.19.0-rc.2'
         bucket4jVersion = '8.15.0'
-        arcmutateSpringversion = '1.1.1'
+        arcmutateSpringversion = '1.1.2'
     }
     dependencies {
         classpath "org.owasp:dependency-check-gradle: ${owaspVersion}"

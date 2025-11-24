@@ -10,12 +10,11 @@ import co.com.luisgomez29.model.common.exception.BusinessException;
 import co.com.luisgomez29.model.common.exception.TechnicalException;
 import co.com.luisgomez29.model.genre.Genre;
 import co.com.luisgomez29.usecase.cinema.CinemaUseCase;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import reactor.core.publisher.Flux;
@@ -25,7 +24,6 @@ import static co.com.luisgomez29.model.common.enums.BusinessExceptionMessage.GEN
 import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_FIND_ALL;
 import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_SAVE;
 import static co.com.luisgomez29.model.common.enums.TechnicalExceptionMessage.GENRE_UPDATE;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -71,9 +69,8 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
 
         statusAssertionsWebClientGet(url)
                 .is5xxServerError()
-                .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
-                        .isEqualTo(GENRE_FIND_ALL.getMessage()));
+                .expectBody()
+                .jsonPath("$.error.message").isEqualTo(GENRE_FIND_ALL.getMessage());
     }
 
     @Test
@@ -83,9 +80,8 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
 
         statusAssertionsWebClientGet(url.concat(ID), 1)
                 .is4xxClientError()
-                .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
-                        .isEqualTo(GENRE_NOT_FOUND.getMessage()));
+                .expectBody()
+                .jsonPath("$.error.message").isEqualTo(GENRE_NOT_FOUND.getMessage());
     }
 
     @Test
@@ -96,9 +92,8 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
 
         statusAssertionsWebClientPost(url, request)
                 .is5xxServerError()
-                .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
-                        .isEqualTo(GENRE_SAVE.getMessage()));
+                .expectBody()
+                .jsonPath("$.error.message").isEqualTo(GENRE_SAVE.getMessage());
     }
 
     @Test
@@ -109,9 +104,8 @@ class GenreRouterWithExceptionTest extends BaseIntegration {
 
         statusAssertionsWebClientPut(url.concat(ID), request, genre.getId())
                 .is5xxServerError()
-                .expectBody(JsonNode.class)
-                .value(userResponse -> assertThat(userResponse.get("error").get("message").asText())
-                        .isEqualTo(GENRE_UPDATE.getMessage()));
+                .expectBody()
+                .jsonPath("$.error.message").isEqualTo(GENRE_UPDATE.getMessage());
     }
 
 }

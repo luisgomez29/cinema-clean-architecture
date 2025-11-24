@@ -1,7 +1,6 @@
 package co.com.luisgomez29.api;
 
 import co.com.luisgomez29.api.config.ApiProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpMethod;
@@ -9,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.StatusAssertions;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class BaseIntegration {
     protected WebTestClient webTestClient;
 
     @Autowired
-    protected ObjectMapper mapper;
+    protected JsonMapper mapper;
 
     @SuppressWarnings("unchecked")
     protected <T> T loadFileConfig(String filename, Class<T> clazz) {
